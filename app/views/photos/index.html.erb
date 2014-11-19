@@ -1,6 +1,6 @@
 <% if @photos.any? %>
 	<% @photos.each do |photo| %>
-		<h3> <%= photo.name %> </h3>	
+		<h3><%= link_to "#{photo.name}", photo_path(photo) %> </h3>	
 	<% end %>
 <% else %>	
 	No photos
