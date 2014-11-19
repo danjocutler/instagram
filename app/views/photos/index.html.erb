@@ -2,6 +2,7 @@
 	<% @photos.each do |photo| %>
 		<h3><%= link_to "#{photo.name}", photo_path(photo) %> </h3>	
 		<p><%= link_to "Edit #{photo.name}", edit_photo_path(photo) %></p>
+		<p><%= link_to "Delete #{photo.name}", photo_path(photo), method: :delete %></p>
 	<% end %>
 <% else %>	
 	No photos

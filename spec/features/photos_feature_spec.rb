@@ -75,5 +75,19 @@ describe 'CRUD' do
 
 	end
 
+	context 'deleting photos' do
+
+	  before do
+	    Photo.create(name:'test photo')
+	  end
+
+		it 'removes a photo when a user clicks a delete link' do
+			visit '/photos'
+			click_link 'Delete test photo'
+			expect(page).not_to have_content 'test photo'
+			expect(page).to have_content 'Photo deleted successfully'
+		end
+	end
+
 end
 
