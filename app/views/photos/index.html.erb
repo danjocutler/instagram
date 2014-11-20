@@ -4,6 +4,7 @@
 		<p><%= link_to "Comment", new_photo_comment_path(photo) %></p>
 		<p><%= link_to "Edit #{photo.name}", edit_photo_path(photo) %></p>
 		<p><%= link_to "Delete #{photo.name}", photo_path(photo), method: :delete %></p>
+			<h3>Comments for <%=  photo.name %></h3>
 			<% if photo.comments.any? %>
 				<ul>
 					<% photo.comments.each do |comment| %>
