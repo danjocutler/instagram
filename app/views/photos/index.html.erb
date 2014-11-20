@@ -1,11 +1,23 @@
 <% if @photos.any? %>
 	<% @photos.each do |photo| %>
 		<h3><%= link_to "#{photo.name}", photo_path(photo) %> </h3>	
+		<p><%= link_to "Comment", new_photo_comment_path(photo) %></p>
 		<p><%= link_to "Edit #{photo.name}", edit_photo_path(photo) %></p>
 		<p><%= link_to "Delete #{photo.name}", photo_path(photo), method: :delete %></p>
+			<% if photo.comments.any? %>
+				<ul>
+					<% photo.comments.each do |comment| %>
+						<li>
+							<%= comment.thoughts %>
+						</li>
+					<% end %>
+				</ul>
+			<% else %>
+				<p> No reviews.</p>
+			<% end %>
 	<% end %>
 <% else %>	
 	No photos
 <% end %>
 
-<a href='photos/new'>Add a photo</a>
+<a href='/photos/new'>Add a photo</a>
