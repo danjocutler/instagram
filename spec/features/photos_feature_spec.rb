@@ -43,6 +43,19 @@ describe 'CRUD' do
 
 	end
 
+	 context 'an invalid photo' do
+
+    it 'does not let you submit a name that is too short' do
+      visit '/photos'
+      click_link 'Add a photo'
+      fill_in 'Name', with: 'ph'
+      click_button 'Create Photo'
+      expect(page).not_to have_css 'h2', text: 'ph'
+      expect(page).to have_content 'error'
+    end
+
+  end
+
 	context 'viewing photos' do
 
 	  before do
