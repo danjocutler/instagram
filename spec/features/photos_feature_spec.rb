@@ -14,11 +14,8 @@ describe 'photos' do
 
   context 'photos have been added' do
   
-  before do
-    Photo.create(name: 'test photo')
-  end
-
 	  it 'should display photos' do
+	    Photo.create(name: 'test photo')
 	    visit '/photos'
 	    expect(page).to have_content('test photo')
 	    expect(page).not_to have_content('No photos')
@@ -30,10 +27,19 @@ end
 
 describe 'CRUD' do
 
+	  before do
+	    @photo = Photo.create(name:'photo')
+	    visit '/'
+			click_link 'Sign up'
+			fill_in 'Email', with: 'test@test.com'
+			fill_in 'Password', with: '12345678' 
+			fill_in 'Password confirmation', with: '12345678'
+			click_button 'Sign up' 
+	  end
+
 	context 'creating photos' do
 
 		it 'prompts user to fill out a form, then displays the new photo' do
-			visit '/photos'
 			click_link 'Add a photo'
 			fill_in 'Name', with: 'test photo'
 			click_button 'Create Photo'
@@ -46,7 +52,6 @@ describe 'CRUD' do
 	 context 'an invalid photo' do
 
     it 'does not let you submit a name that is too short' do
-      visit '/photos'
       click_link 'Add a photo'
       fill_in 'Name', with: 'ph'
       click_button 'Create Photo'
@@ -58,12 +63,7 @@ describe 'CRUD' do
 
 	context 'viewing photos' do
 
-	  before do
-	    @photo = Photo.create(name:'photo')
-	  end
-
 	  it 'lets a user view a photo' do
-			visit '/photos'
 			click_link 'photo'
 			expect(page).to have_content 'photo'
 			expect(current_path).to eq "/photos/#{@photo.id}"
@@ -73,13 +73,8 @@ describe 'CRUD' do
 
 	context 'editing photos' do
 
-	  before do
-	    Photo.create(name:'test photo')
-	  end
-
 	  it 'lets a user edit a photo' do
-			visit '/photos'
-			click_link 'Edit test photo'
+			click_link 'Edit photo'
 			fill_in 'Name', with: 'photo'
 			click_button 'Update Photo'
 			expect(page).to have_content 'photo'
@@ -90,13 +85,8 @@ describe 'CRUD' do
 
 	context 'deleting photos' do
 
-	  before do
-	    Photo.create(name:'test photo')
-	  end
-
 		it 'removes a photo when a user clicks a delete link' do
-			visit '/photos'
-			click_link 'Delete test photo'
+			click_link 'Delete photo'
 			expect(page).not_to have_content 'test photo'
 			expect(page).to have_content 'Photo deleted successfully'
 		end
